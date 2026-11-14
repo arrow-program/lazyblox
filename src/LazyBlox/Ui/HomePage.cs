@@ -1,3 +1,4 @@
+using LazyBlox.Localization;
 using System.Text;
 
 namespace LazyBlox.Ui;
@@ -18,7 +19,7 @@ internal sealed class HomePage : Page
 
     private string FriendlyProgId(string? progId)
     {
-        if (progId is null) return "未設定";
+        if (progId is null) return L.S.NotSet;
         if (progId == AppInfo.ProgId) return "LazyBlox";
         return _browsers.FirstOrDefault(b => string.Equals(b.ProgId, progId, StringComparison.OrdinalIgnoreCase))?.Name ?? progId;
     }
@@ -31,7 +32,7 @@ internal sealed class HomePage : Page
         // ---- header ----
         ui.Logo(Ui.Pad, ui.Y, 48);
         ui.G.Text("LazyBlox", Ui.Pad + 64, ui.Y - 1, ui.Inner - 64, FontKind.Display, T.Text, wrap: false);
-        ui.G.Text("Roblox のプライベートサーバーへ、ブラウザを経由せず直接参加", Ui.Pad + 65, ui.Y + 32, ui.Inner - 65,
+        ui.G.Text(L.S.AppTagline, Ui.Pad + 65, ui.Y + 32, ui.Inner - 65,
             FontKind.Small, T.SubText, wrap: false);
         ui.Y += 48 + 26;
 
@@ -65,32 +66,32 @@ internal sealed class HomePage : Page
 
         // ---- facts ----
         float gap = 10, tileW = (ui.Inner - gap * 2) / 3;
-        Tile(ui, Ui.Pad, "HTTPS の既定", FriendlyProgId(s.HttpsProgId), s.HttpsIsLazyBlox ? T.Success : T.Faint, tileW);
-        Tile(ui, Ui.Pad + tileW + gap, "転送先ブラウザ",
-            string.IsNullOrEmpty(s.BrowserName) ? "未設定" : s.BrowserName, string.IsNullOrEmpty(s.BrowserName) ? T.Faint : T.Info, tileW);
-        Tile(ui, Ui.Pad + (tileW + gap) * 2, "Roblox", s.RobloxRegistered ? "検出済み" : "見つかりません",
+        Tile(ui, Ui.Pad, L.S.TileHttps, FriendlyProgId(s.HttpsProgId), s.HttpsIsLazyBlox ? T.Success : T.Faint, tileW);
+        Tile(ui, Ui.Pad + tileW + gap, L.S.TileBrowser,
+            string.IsNullOrEmpty(s.BrowserName) ? L.S.NotSet : s.BrowserName, string.IsNullOrEmpty(s.BrowserName) ? T.Faint : T.Info, tileW);
+        Tile(ui, Ui.Pad + (tileW + gap) * 2, "Roblox", s.RobloxRegistered ? L.S.RobloxDetected : L.S.RobloxMissing,
             s.RobloxRegistered ? T.Success : T.Danger, tileW);
         ui.Y += 66 + 18;
 
         // ---- actions ----
-        ui.SectionLabel("操作");
+        ui.SectionLabel(L.S.SectionActions);
         if (s.Registered)
         {
-            ui.Row("defaultapps", Glyph.Settings, "既定のアプリ設定を開く", "HTTPS と HTTP で LazyBlox を選びます（ご自身で切り替え）",
+            ui.Row("defaultapps", Glyph.Settings, L.S.RowDefaultApps, L.S.RowDefaultAppsDesc,
                 OpenDefaultApps, RowTrail.External);
         }
         ui.Row("install", s.Registered ? Glyph.Repair : Glyph.Download,
-            s.Registered ? "登録を修復 / 再インストール" : "インストール",
-            "変更内容を確認してから実行します。管理者権限は不要です", ConfirmInstall);
-        ui.Row("browser", Glyph.Globe, "転送先ブラウザ",
-            "Roblox 以外のリンクを開くブラウザ: " + (string.IsNullOrEmpty(s.BrowserName) ? "未設定" : s.BrowserName),
+            s.Registered ? L.S.RowRepair : L.S.RowInstall,
+            L.S.RowInstallDesc, ConfirmInstall);
+        ui.Row("browser", Glyph.Globe, L.S.RowBrowser,
+            L.F(L.S.RowBrowserDesc, string.IsNullOrEmpty(s.BrowserName) ? L.S.NotSet : s.BrowserName),
             () => Host.Navigate(new BrowserPage(this)));
-        ui.Row("legacy", Glyph.History, "旧形式リンクも Roblox で開く",
-            "/games/…?privateServerLinkCode= 形式に対応（実験的）", ToggleLegacy, RowTrail.Toggle, on: s.LegacyEnabled);
-        ui.Row("test", Glyph.Search, "リンクの判定テスト", "どのリンクが Roblox で開くかを確認します（起動はしません）",
+        ui.Row("legacy", Glyph.History, L.S.RowLegacy,
+            L.S.RowLegacyDesc, ToggleLegacy, RowTrail.Toggle, on: s.LegacyEnabled);
+        ui.Row("test", Glyph.Search, L.S.RowTest, L.S.RowTestDesc,
             () => Host.Navigate(new TestPage(this)));
         if (s.Registered)
-            ui.Row("uninstall", Glyph.Delete, "アンインストール", "このアプリが作成したレジストリと設定だけを削除します",
+            ui.Row("uninstall", Glyph.Delete, L.S.BtnUninstall, L.S.RowUninstallDesc,
                 ConfirmUninstall, danger: true);
 
         ui.Y += 8;
@@ -100,21 +101,20 @@ internal sealed class HomePage : Page
 
     private (MessageKind, string, string, string, string?, Action?) Hero(InstallStatus s)
     {
-        string robloxNote = s.RobloxRegistered ? "" : "\nRoblox が見つからないため、Roblox のリンクもブラウザで開きます。";
+        string robloxNote = s.RobloxRegistered ? "" : "\n" + L.S.HeroRobloxMissing;
         if (!s.Registered)
-            return (MessageKind.Info, "未インストール", "まずはインストール",
-                "インストールすると、Windows の「既定のアプリ」で LazyBlox を選べるようになります。既定のブラウザは変更しません。" + robloxNote,
-                "インストール", ConfirmInstall);
+            return (MessageKind.Info, L.S.HeroNotInstalledPill, L.S.HeroNotInstalledTitle,
+                L.S.HeroNotInstalledDesc + robloxNote,
+                L.S.BtnInstall, ConfirmInstall);
         if (s.Problems.Count > 0)
-            return (MessageKind.Error, "要修復", "登録に問題があります", string.Join("\n", s.Problems), "修復する", ConfirmInstall);
+            return (MessageKind.Error, L.S.HeroBrokenPill, L.S.HeroBrokenTitle, string.Join("\n", s.Problems), L.S.BtnRepair, ConfirmInstall);
         if (!s.HttpsIsLazyBlox)
-            return (MessageKind.Warning, "あと 1 ステップ", "既定のアプリを切り替えてください",
-                "設定で「HTTPS」と「HTTP」に LazyBlox を選ぶと、Discord などのリンクを受け取れるようになります。" + robloxNote,
-                "既定のアプリを開く", OpenDefaultApps);
-        return (MessageKind.Success, "準備完了", "Roblox リンクは直接起動します",
-            "Discord などでプライベートサーバーのリンクを開くと、ブラウザを経由せずに Roblox が起動します。それ以外のリンクは "
-            + (string.IsNullOrEmpty(s.BrowserName) ? "ブラウザ" : s.BrowserName) + " で開きます。"
-            + (s.HttpIsLazyBlox ? "" : "\nHTTP も LazyBlox にしておくと、http:// のリンクにも対応します。") + robloxNote,
+            return (MessageKind.Warning, L.S.HeroOneStepPill, L.S.HeroOneStepTitle,
+                L.S.HeroOneStepDesc + robloxNote,
+                L.S.BtnOpenDefaultApps, OpenDefaultApps);
+        return (MessageKind.Success, L.S.HeroReadyPill, L.S.HeroReadyTitle,
+            L.F(L.S.HeroReadyDesc, string.IsNullOrEmpty(s.BrowserName) ? L.S.GenericBrowser : s.BrowserName)
+            + (s.HttpIsLazyBlox ? "" : "\n" + L.S.HeroReadyHttpHint) + robloxNote,
             null, null);
     }
 
@@ -144,12 +144,12 @@ internal sealed class HomePage : Page
         var installer = new Installer(WindowsRegistry.Instance, _ => { });
         string plan = installer.DescribeInstall(new InstallOptions());
         Host.Navigate(new DialogPage(MessageKind.Info,
-            _status.Registered ? "登録を修復しますか？" : "インストールしますか？",
-            "以下の変更を、現在のユーザーにだけ行います。既定のブラウザや他のアプリの設定は変更しません。",
+            _status.Registered ? L.S.ConfirmRepairTitle : L.S.ConfirmInstallTitle,
+            L.S.ConfirmInstallBody,
             plan,
             [
-                new("キャンセル", ButtonKind.Secondary, w => w.Navigate(this)),
-                new(_status.Registered ? "修復する" : "インストール", ButtonKind.Primary, _ => RunInstall()),
+                new(L.S.Cancel, ButtonKind.Secondary, w => w.Navigate(this)),
+                new(_status.Registered ? L.S.BtnRepair : L.S.BtnInstall, ButtonKind.Primary, _ => RunInstall()),
             ],
             w => w.Navigate(this)));
     }
@@ -160,25 +160,25 @@ internal sealed class HomePage : Page
         bool ok = Guard(() => new Installer(WindowsRegistry.Instance, l => log.AppendLine(l)).Install(new InstallOptions()), log);
         Refresh();
         Host.Navigate(ok
-            ? new DialogPage(MessageKind.Success, "インストールしました",
-                "最後に、Windows の設定で「HTTPS」と「HTTP」の既定アプリに LazyBlox を選んでください。", log.ToString().TrimEnd(),
+            ? new DialogPage(MessageKind.Success, L.S.InstalledTitle,
+                L.S.InstalledBody, log.ToString().TrimEnd(),
                 [
-                    new("あとで", ButtonKind.Secondary, w => w.Navigate(this)),
-                    new("既定のアプリを開く", ButtonKind.Primary, w => { OpenDefaultApps(); w.Navigate(this); }, Glyph.OpenExternal),
+                    new(L.S.Later, ButtonKind.Secondary, w => w.Navigate(this)),
+                    new(L.S.BtnOpenDefaultApps, ButtonKind.Primary, w => { OpenDefaultApps(); w.Navigate(this); }, Glyph.OpenExternal),
                 ], w => w.Navigate(this))
-            : new DialogPage(MessageKind.Error, "インストールできませんでした", "詳細を確認してください。", log.ToString().TrimEnd(),
-                [new("戻る", ButtonKind.Primary, w => w.Navigate(this))], w => w.Navigate(this)));
+            : new DialogPage(MessageKind.Error, L.S.InstallFailedTitle, L.S.InstallFailedBody, log.ToString().TrimEnd(),
+                [new(L.S.Back, ButtonKind.Primary, w => w.Navigate(this))], w => w.Navigate(this)));
     }
 
     private void ConfirmUninstall()
     {
         var installer = new Installer(WindowsRegistry.Instance, _ => { });
-        Host.Navigate(new DialogPage(MessageKind.Warning, "アンインストールしますか？",
-            "このアプリが作成したレジストリと設定だけを削除します。既定のブラウザが LazyBlox のままの場合は、あとで Windows の設定から元のブラウザを選び直してください。",
+        Host.Navigate(new DialogPage(MessageKind.Warning, L.S.ConfirmUninstallTitle,
+            L.S.ConfirmUninstallBody,
             installer.DescribeUninstall(),
             [
-                new("キャンセル", ButtonKind.Secondary, w => w.Navigate(this)),
-                new("アンインストール", ButtonKind.Danger, _ => RunUninstall()),
+                new(L.S.Cancel, ButtonKind.Secondary, w => w.Navigate(this)),
+                new(L.S.BtnUninstall, ButtonKind.Danger, _ => RunUninstall()),
             ],
             w => w.Navigate(this)));
     }
@@ -190,13 +190,13 @@ internal sealed class HomePage : Page
         bool ok = Guard(() => new Installer(WindowsRegistry.Instance, l => log.AppendLine(l)).Uninstall(keepConfig: false), log);
         Refresh();
         Host.Navigate(new DialogPage(ok ? MessageKind.Success : MessageKind.Error,
-            ok ? "アンインストールしました" : "一部を削除できませんでした",
-            wasDefault ? "HTTPS の既定がまだ LazyBlox になっています。Windows の設定で元のブラウザを選び直してください。" : "ご利用ありがとうございました。",
+            ok ? L.S.UninstalledTitle : L.S.UninstallPartialTitle,
+            wasDefault ? L.S.UninstalledStillDefault : L.S.UninstalledThanks,
             log.ToString().TrimEnd(),
             wasDefault
-                ? [new("閉じる", ButtonKind.Secondary, w => w.Close()),
-                   new("既定のアプリを開く", ButtonKind.Primary, w => { Installer.OpenDefaultAppsSettings(WindowsShell.Instance, null); w.Close(); }, Glyph.OpenExternal)]
-                : [new("閉じる", ButtonKind.Primary, w => w.Close())]));
+                ? [new(L.S.Close, ButtonKind.Secondary, w => w.Close()),
+                   new(L.S.BtnOpenDefaultApps, ButtonKind.Primary, w => { Installer.OpenDefaultAppsSettings(WindowsShell.Instance, null); w.Close(); }, Glyph.OpenExternal)]
+                : [new(L.S.Close, ButtonKind.Primary, w => w.Close())]));
     }
 
     private static bool Guard(Func<bool> action, StringBuilder log)
@@ -204,7 +204,7 @@ internal sealed class HomePage : Page
         try { return action(); }
         catch (Exception e) when (e is IOException or UnauthorizedAccessException or System.Security.SecurityException or InvalidOperationException)
         {
-            log.AppendLine("エラー: " + e.Message);
+            log.AppendLine(L.F(L.S.ErrorPrefix, e.Message));
             return false;
         }
     }

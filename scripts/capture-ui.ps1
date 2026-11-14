@@ -35,7 +35,7 @@ try {
     $bmp = New-Object Drawing.Bitmap ($r.R - $r.L), ($r.B - $r.T)
     $g = [Drawing.Graphics]::FromImage($bmp); $hdc = $g.GetHdc()
     [void][CapWin]::PrintWindow($h, $hdc, 2); $g.ReleaseHdc($hdc); $g.Dispose()
-    $bmp.Save((Join-Path (Get-Location) $Out), [Drawing.Imaging.ImageFormat]::Png); $bmp.Dispose()
+    $bmp.Save($(if ([IO.Path]::IsPathRooted($Out)) { $Out } else { Join-Path (Get-Location) $Out }), [Drawing.Imaging.ImageFormat]::Png); $bmp.Dispose()
     "saved $Out ($($r.R - $r.L)x$($r.B - $r.T))"
 }
 finally { if (-not $p.HasExited) { $p.Kill() } }

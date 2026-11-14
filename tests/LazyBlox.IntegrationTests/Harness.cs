@@ -40,6 +40,7 @@ internal sealed class Harness : IDisposable
         foreach (string a in args) psi.ArgumentList.Add(a);
         psi.Environment[AppInfo.HomeEnvVar] = Home;
         psi.Environment[AppInfo.SilentEnvVar] = "1";
+        psi.Environment[LazyBlox.Localization.L.LangEnvVar] = "ja"; // assertions check Japanese messages
         psi.Environment["FAKEBROWSER_OUT"] = BrowserOut;
         psi.Environment.Remove(AppInfo.ForwardGuardEnvVar);
         return psi;
@@ -106,4 +107,10 @@ public sealed class RealExternalFactAttribute : FactAttribute
         if (Environment.GetEnvironmentVariable("LAZYBLOX_REAL_TESTS") != "1")
             Skip = "Real external app test. Set LAZYBLOX_REAL_TESTS=1 to run (launches real apps).";
     }
+}
+
+internal static class TestLanguage
+{
+    [System.Runtime.CompilerServices.ModuleInitializer]
+    internal static void PinJapanese() => LazyBlox.Localization.L.Override("ja");
 }

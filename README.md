@@ -315,6 +315,28 @@ LazyBlox.exe timing on|off | legacy on|off
   ```
 - 設定画面左上のロゴはコードで描画しています（`Ui.Logo`、同じ形と配色）。
 
+## 12. 多言語対応
+
+画面・エラー・CLI の表示は、Windows の表示言語（`GetUserDefaultUILanguage`）に合わせて自動で切り替わります。
+
+| 言語 | コード |
+|---|---|
+| English（上記以外の言語はすべて英語） | `en` |
+| 日本語 | `ja` |
+| 简体中文 | `zh-Hans` |
+| 繁體中文（台湾・香港・マカオ） | `zh-Hant` |
+| 한국어 | `ko` |
+| Español | `es` |
+| Português | `pt` |
+
+- 環境変数 `LAZYBLOX_LANG` で言語を固定できます（例: `set LAZYBLOX_LANG=en`）。
+- 文字列は `src/LazyBlox/Localization/Lang.*.cs` にあります。1 言語を 1 ファイルにまとめています。項目を書き忘れるとビルドエラーになります（`required`）。プレースホルダー `{0}` の数が英語と違う場合はテストで検出します。
+- 見出しには言語ごとのフォントを使います（日本語: Yu Gothic UI、中国語: Microsoft YaHei UI / JhengHei UI、韓国語: Malgun Gothic）。
+
+| English | 简体中文 |
+|---|---|
+| ![English](docs/screenshot-home-en.png) | ![简体中文](docs/screenshot-home-zh-Hans.png) |
+
 ## ライセンス
 
 [GNU General Public License v3.0](LICENSE)

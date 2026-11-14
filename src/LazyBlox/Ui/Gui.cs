@@ -1,3 +1,5 @@
+using LazyBlox.Localization;
+
 namespace LazyBlox.Ui;
 
 /// <summary>Entry points for everything visual. Silent: custom windows never play system sounds.</summary>
@@ -12,12 +14,12 @@ internal static class Gui
         {
             "browser" => new BrowserPage(new HomePage()),
             "test" => new TestPage(new HomePage()),
-            "message" => Demo(MessageKind.Success, "インストールしました", "最後に、Windows の設定で既定アプリに LazyBlox を選んでください。"),
-            "error" => Demo(MessageKind.Error, "リンクを開けませんでした", "ブラウザを起動できませんでした。\n設定で転送先ブラウザを選び直してください。"),
-            "confirm" => new DialogPage(MessageKind.Info, "インストールしますか？",
-                "以下の変更を、現在のユーザーにだけ行います。既定のブラウザや他のアプリの設定は変更しません。",
+            "message" => Demo(MessageKind.Success, L.S.InstalledTitle, L.S.InstalledBody),
+            "error" => Demo(MessageKind.Error, L.S.ErrWindowTitle, L.S.ErrBrowserFailed + "\n" + L.S.ErrBrowserHint),
+            "confirm" => new DialogPage(MessageKind.Info, L.S.ConfirmInstallTitle,
+                L.S.ConfirmInstallBody,
                 new Installer(WindowsRegistry.Instance, _ => { }).DescribeInstall(new InstallOptions()),
-                [new("キャンセル", ButtonKind.Secondary, w => w.Close()), new("インストール", ButtonKind.Primary, w => w.Close())]),
+                [new(L.S.Cancel, ButtonKind.Secondary, w => w.Close()), new(L.S.BtnInstall, ButtonKind.Primary, w => w.Close())]),
             _ => new HomePage(),
         };
         AppWindow.Run(start, Title, 600, 780);
@@ -25,7 +27,7 @@ internal static class Gui
     }
 
     private static DialogPage Demo(MessageKind kind, string title, string body) =>
-        new(kind, title, body, null, [new("閉じる", ButtonKind.Primary, w => w.Close())]);
+        new(kind, title, body, null, [new(L.S.Close, ButtonKind.Primary, w => w.Close())]);
 
     /// <summary>Message window sized to its content. Falls back to a plain MessageBox if the custom UI cannot start.</summary>
     public static void Message(string title, string body, MessageKind kind, string? copyText = null)
@@ -34,8 +36,8 @@ internal static class Gui
         {
             var buttons = new List<DialogButton>();
             if (copyText is not null)
-                buttons.Add(new DialogButton("コピー", ButtonKind.Secondary, w => W.SetClipboardText(w.Handle, copyText), Glyph.Copy));
-            buttons.Add(new DialogButton("閉じる", ButtonKind.Primary, w => w.Close()));
+                buttons.Add(new DialogButton(L.S.Copy, ButtonKind.Secondary, w => W.SetClipboardText(w.Handle, copyText), Glyph.Copy));
+            buttons.Add(new DialogButton(L.S.Close, ButtonKind.Primary, w => w.Close()));
             AppWindow.Run(new DialogPage(kind, title, body, null, buttons), Title, 520, 640, fitContent: true);
         }
         catch (Exception e) when (e is InvalidOperationException or DllNotFoundException or EntryPointNotFoundException)
@@ -51,7 +53,7 @@ internal static class Gui
         {
             object? result = AppWindow.Run(new DialogPage(danger ? MessageKind.Warning : MessageKind.Info, title, body, details,
             [
-                new("キャンセル", ButtonKind.Secondary, w => { w.Result = false; w.Close(); }),
+                new(L.S.Cancel, ButtonKind.Secondary, w => { w.Result = false; w.Close(); }),
                 new(confirmLabel, danger ? ButtonKind.Danger : ButtonKind.Primary, w => { w.Result = true; w.Close(); }),
             ]), Title, 640, 720, fitContent: true);
             return result is true;

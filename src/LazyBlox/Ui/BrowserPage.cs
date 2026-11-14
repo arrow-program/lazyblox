@@ -1,3 +1,5 @@
+using LazyBlox.Localization;
+
 namespace LazyBlox.Ui;
 
 /// <summary>Pick the browser that receives non-Roblox links.</summary>
@@ -18,14 +20,14 @@ internal sealed class BrowserPage(Page back) : Page
     public override void Render(Ui ui)
     {
         ui.Y = 30;
-        ui.G.Text("転送先ブラウザ", Ui.Pad, ui.Y, ui.Inner, FontKind.Title, T.Text);
+        ui.G.Text(L.S.BrowserTitle, Ui.Pad, ui.Y, ui.Inner, FontKind.Title, T.Text);
         ui.Y += 36;
-        ui.Paragraph("Roblox 以外のリンクは、ここで選んだブラウザで開きます。LazyBlox 自身や、関連付けを経由して戻ってくる起動方法は一覧に出ません。",
+        ui.Paragraph(L.S.BrowserIntro,
             FontKind.Small, gapAfter: 18);
 
         if (_all.Count == 0)
         {
-            ui.Paragraph("登録済みのブラウザが見つかりませんでした。CLI の set-browser で exe のパスを指定できます。", FontKind.Body, T.Danger);
+            ui.Paragraph(L.S.BrowserNone, FontKind.Body, T.Danger);
             return;
         }
         for (int i = 0; i < _all.Count; i++)
@@ -42,8 +44,8 @@ internal sealed class BrowserPage(Page back) : Page
 
     public override void RenderFooter(Ui ui, RectF area) =>
         ui.FooterButtons(area,
-            ("cancel", "キャンセル", ButtonKind.Secondary, () => Host.Navigate(back), null),
-            ("save", "保存", ButtonKind.Primary, Save, null));
+            ("cancel", L.S.Cancel, ButtonKind.Secondary, () => Host.Navigate(back), null),
+            ("save", L.S.Save, ButtonKind.Primary, Save, null));
 
     private void Save()
     {

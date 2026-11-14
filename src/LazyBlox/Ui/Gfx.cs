@@ -169,10 +169,28 @@ internal sealed unsafe class Gfx : IDisposable
     private static void EnsureFonts()
     {
         if (Fonts.Count > 0) return;
-        nint regular = Family(out _, "Segoe UI", "Yu Gothic UI", "Meiryo UI");
+        // zh / ko: the script's UI font for body too (fallback from Segoe UI spaces Han glyphs unevenly);
+        // these fonts draw "\" correctly. Japanese keeps Segoe UI because Yu Gothic draws "\" as "¥".
+        nint regular = LazyBlox.Localization.L.Code switch
+        {
+            "zh-Hans" => Family(out _, "Microsoft YaHei UI", "Segoe UI"),
+            "zh-Hant" => Family(out _, "Microsoft JhengHei UI", "Segoe UI"),
+            "ko" => Family(out _, "Malgun Gothic", "Segoe UI"),
+            _ => Family(out _, "Segoe UI", "Yu Gothic UI", "Meiryo UI"),
+        };
         // Body text: Segoe UI (correct "\" in paths; Japanese via system font fallback).
         // Headings: Yu Gothic UI Semibold so Japanese keeps its weight (headings never contain paths).
-        nint semibold = Family(out string boldName, "Yu Gothic UI Semibold", "Segoe UI Semibold", "Yu Gothic UI");
+        // CJK headings use the script's own UI font so glyph shapes match the language (Han unification).
+        string[] headings = LazyBlox.Localization.L.Code switch
+        {
+            "ja" => ["Yu Gothic UI Semibold", "Yu Gothic UI", "Segoe UI Semibold"],
+            "zh-Hans" => ["Microsoft YaHei UI", "Segoe UI Semibold"],
+            "zh-Hant" => ["Microsoft JhengHei UI", "Segoe UI Semibold"],
+            "ko" => ["Malgun Gothic", "Segoe UI Semibold"],
+            _ => ["Segoe UI Semibold", "Segoe UI"],
+        };
+        nint semibold = Family(out string boldName, headings);
+        // Families without a semibold face get GDI+ bold instead.
         bool fakeBold = boldName is not ("Yu Gothic UI Semibold" or "Segoe UI Semibold");
         // Japanese UI fonts draw "\" as "¥", so paths / code use a Latin monospace font (GDI+ falls back for CJK).
         nint mono = Family(out _, "Cascadia Mono", "Consolas", "Courier New");
