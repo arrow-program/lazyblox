@@ -1,0 +1,205 @@
+namespace LazyBlox.Localization;
+
+internal static partial class Lang
+{
+    private static Strings? _zhHant;
+    public static Strings ZhHant => _zhHant ??= new Strings
+    {
+        AppTagline = "不經過瀏覽器，直接加入 Roblox 私人伺服器",
+        AppDescription = "不經過瀏覽器，直接在 Roblox 中開啟 Roblox 私人伺服器連結；其他連結則交給你慣用的瀏覽器。",
+        Cancel = "取消",
+        Close = "關閉",
+        Back = "返回",
+        Save = "儲存",
+        Copy = "複製",
+        Later = "稍後",
+        ErrorPrefix = "錯誤：{0}",
+        On = "開",
+        Off = "關",
+        NotSet = "未設定",
+        GenericBrowser = "瀏覽器",
+
+        UrlEmpty = "URL 是空的",
+        UrlTooLong = "URL 太長",
+        UrlControlChars = "URL 含有控制字元",
+        UrlMalformed = "URL 格式無效",
+        UrlUnsupportedScheme = "不支援的通訊協定：{0}",
+        UrlNoHost = "URL 沒有主機名稱",
+
+        CmdEmpty = "瀏覽器命令是空的",
+        CmdNotAbsolute = "瀏覽器執行檔必須是絕對路徑：{0}",
+        CmdIsSelf = "目標瀏覽器就是本啟動器（為防止無限迴圈已停止）",
+        CmdShellDispatcher = "{0} 會透過關聯把連結送回本啟動器，無法作為目標瀏覽器（防止無限迴圈）",
+
+        ErrWindowTitle = "無法開啟連結",
+        ErrCannotOpen = "無法開啟此連結：{0}",
+        ErrLoop = "偵測到轉送迴圈，已停止。請在設定中確認目標瀏覽器。",
+        ErrNoBrowser = "尚未設定目標瀏覽器。",
+        ErrBrowserFailed = "無法啟動瀏覽器。",
+        ErrBrowserHint = "請在設定中重新選擇目標瀏覽器（不帶參數執行 LazyBlox.exe）。",
+        LaunchShellExecuteFailed = "ShellExecuteEx 失敗（Win32 錯誤 {0}）",
+        LaunchExeNotFound = "找不到執行檔：{0}",
+        LaunchCreateProcessFailed = "CreateProcess 失敗（Win32 錯誤 {0}）：{1}",
+
+        RegDefaultValue = "(預設值)",
+        RegDeleteKey = "（刪除整個機碼）",
+        RegDeleteValue = "刪除值 {0}",
+        RegMismatch = "不一致：{0}",
+        RegExeMissing = "執行檔不存在：{0}",
+        RegLeftKey = "殘留的機碼：{0}",
+        RegLeftValue = "殘留的值：{0}",
+
+        PlanInstallHeader = "■ 安裝時的變更（僅目前使用者 HKCU，不需要系統管理員權限）",
+        PlanCopy = "檔案：將 {0} 複製到 {1}",
+        PlanRegistry = "登錄：",
+        PlanConfig = "設定檔：{0}",
+        PlanBrowser = "  目標瀏覽器：{0}（{1}）",
+        PlanCommand = "  命令：{0}",
+        PlanUnchanged = "不會變更：預設瀏覽器（UserChoice）、其他應用程式的登錄、HKLM。",
+        PlanSwitchYourself = "安裝後，請在 Windows 設定中自行切換預設應用程式。",
+        PlanUninstallHeader = "■ 解除安裝時的變更",
+        PlanUninstallRegistry = "登錄（僅本應用程式建立的內容）：",
+        PlanDeleteConfigDir = "要刪除的資料夾：{0}（設定）",
+        PlanDeleteInstallDir = "要刪除的資料夾：{0}（安裝位置，若存在）",
+        PlanUninstallUnchanged = "不會變更：其他瀏覽器的註冊與設定。請在 Windows 中重新選擇預設瀏覽器。",
+
+        LogNoBrowser = "錯誤：無法偵測到目標瀏覽器。請使用 --browser 指定。",
+        LogBrowser = "目標瀏覽器：{0}（{1}）",
+        LogVerifyProblems = "驗證發現問題：",
+        LogVerifyOk = "註冊已驗證：OK",
+        LogNextStep = "下一步：在「設定 > 應用程式 > 預設應用程式 > LazyBlox」中，將「HTTPS」與「HTTP」改為 LazyBlox。",
+        LogRemovedClean = "已確認登錄刪除：沒有殘留",
+        LogRemovedPartial = "部分登錄項目仍有殘留",
+        LogStillDefault = "注意：HTTPS 目前仍由 LazyBlox 開啟。請在「設定 > 應用程式 > 預設應用程式」改回原本的瀏覽器（{0}）。",
+        LogBadCommand = "已註冊的命令無效",
+        LogCopied = "已複製：{0}",
+        LogDeleted = "已刪除：{0}",
+        LogDeleteFailed = "無法刪除：{0}（{1}）",
+        LogCannotAutoDelete = "此路徑無法自動刪除，請手動刪除：{0}",
+        LogDeleteAfterExit = "將在結束後刪除：{0}",
+        LogDeleteManually = "請手動刪除：{0}",
+        NoteSpecifiedNotFound = "找不到指定的「{0}」",
+        NoteSpecified = "已指定",
+        NoteKeepExisting = "保留現有設定",
+        NoteNotDetected = "未偵測到",
+        NoteDetected = "從目前的預設瀏覽器偵測",
+
+        StRegistered = "註冊：{0}",
+        StYes = "是",
+        StNo = "否",
+        StVerify = "註冊驗證：{0}",
+        StExe = "註冊的 exe：{0}",
+        StHttps = "預設 HTTPS：{0}",
+        StHttp = "預設 HTTP： {0}",
+        StInUse = "  ← 正在使用 LazyBlox",
+        StBrowser = "目標瀏覽器：{0}",
+        StCommand = "  命令：{0}",
+        StRoblox = "Roblox（roblox: 通訊協定）：{0}",
+        StRobloxFound = "已註冊",
+        StRobloxMissing = "找不到",
+
+        CliNotInstalledClean = "未安裝（沒有殘留的登錄項目）",
+        CliInstalledOk = "已安裝，註冊正常（{0}）",
+        CliSetBrowserUsage = "用法：set-browser <ProgID | 瀏覽器名稱 | exe 絕對路徑>",
+        CliBrowserNotFound = "找不到。請執行 'browsers' 查看清單。",
+        CliBrowserSet = "目標瀏覽器：{0}\n  {1}",
+        CliTiming = "計時記錄：{0}  （{1}）",
+        CliLegacy = "舊格式私人伺服器連結轉換：{0}",
+        CliUnknownCommand = "未知的命令：{0}",
+        CliNeedYes = "若要套用上述變更，請加上 --yes 重新執行（尚未做任何變更）。",
+        CliDryRunUsage = "用法：dry-run <URL>",
+        Help = """
+            LazyBlox - Roblox 私人伺服器連結快速啟動器
+
+            用法：
+              LazyBlox.exe                      設定畫面（GUI）
+              LazyBlox.exe <URL>                處理連結（Windows 呼叫的方式）
+              LazyBlox.exe status               顯示註冊狀態、預設應用程式與目標瀏覽器
+              LazyBlox.exe plan [uninstall]     預覽登錄變更（不做任何變更）
+              LazyBlox.exe install [--yes] [--in-place] [--browser <名稱|ProgID|exe路徑>] [--no-settings]
+              LazyBlox.exe uninstall [--yes] [--keep-config]
+              LazyBlox.exe verify               驗證註冊內容 / 殘留設定
+              LazyBlox.exe browsers             列出偵測到的瀏覽器（* = 目前目標）
+              LazyBlox.exe set-browser <名稱|ProgID|exe路徑>
+              LazyBlox.exe default-apps         開啟 Windows 預設應用程式設定
+              LazyBlox.exe dry-run <URL>        顯示判定結果與預定動作（不啟動任何程式）
+              LazyBlox.exe bench [URL] [次數]   URL 判定的微基準測試
+              LazyBlox.exe timing on|off        將處理時間記錄到 timing.log
+              LazyBlox.exe legacy on|off        轉換舊格式 /games/ID?privateServerLinkCode= 連結（實驗性）
+
+            未加 --yes 時，install / uninstall 只會顯示變更內容，不會執行任何動作。
+            """,
+
+        ConfirmInstallTitle = "要安裝 LazyBlox 嗎？",
+        ConfirmRepairTitle = "要修復註冊嗎？",
+        ConfirmInstallBody = "以下變更僅套用於目前使用者。不會變更預設瀏覽器或其他應用程式的設定。",
+        ConfirmUninstallTitle = "要解除安裝 LazyBlox 嗎？",
+        ConfirmUninstallBody = "僅刪除本應用程式建立的登錄項目與設定。如果 LazyBlox 仍是連結的預設應用程式，之後請在 Windows 設定中重新選擇原本的瀏覽器。",
+        ConfirmGenericBody = "將進行以下變更。",
+        BtnInstall = "安裝",
+        BtnRepair = "修復",
+        BtnUninstall = "解除安裝",
+        BtnOpenDefaultApps = "開啟預設應用程式",
+        InstalledTitle = "安裝完成",
+        InstalledBody = "最後一步：在 Windows 設定中，將「HTTPS」與「HTTP」的預設應用程式設為 LazyBlox。",
+        InstallFailedTitle = "安裝失敗",
+        InstallFailedBody = "請查看下方的詳細資訊。",
+        UninstalledTitle = "解除安裝完成",
+        UninstallPartialTitle = "部分內容無法刪除",
+        UninstalledStillDefault = "HTTPS 仍由 LazyBlox 開啟。請在 Windows 設定中重新選擇原本的瀏覽器。",
+        UninstalledThanks = "感謝使用 LazyBlox。",
+        AfterUninstallHint = "如果預設瀏覽器仍是 LazyBlox，請在「設定 > 應用程式 > 預設應用程式」重新選擇原本的瀏覽器。",
+
+        SectionActions = "操作",
+        TileHttps = "HTTPS 預設",
+        TileBrowser = "目標瀏覽器",
+        RobloxDetected = "已偵測到",
+        RobloxMissing = "找不到",
+        RowDefaultApps = "開啟預設應用程式設定",
+        RowDefaultAppsDesc = "為 HTTPS 與 HTTP 選擇 LazyBlox（需自行切換）",
+        RowInstall = "安裝",
+        RowRepair = "修復 / 重新安裝",
+        RowInstallDesc = "執行前會先顯示變更內容。不需要系統管理員權限",
+        RowBrowser = "目標瀏覽器",
+        RowBrowserDesc = "開啟非 Roblox 連結的瀏覽器：{0}",
+        RowLegacy = "舊格式連結也用 Roblox 開啟",
+        RowLegacyDesc = "支援 /games/…?privateServerLinkCode= 格式（實驗性）",
+        RowTest = "連結判定測試",
+        RowTestDesc = "查看哪些連結會在 Roblox 中開啟（不會啟動任何程式）",
+        RowUninstallDesc = "僅刪除本應用程式建立的登錄項目與設定",
+        HeroRobloxMissing = "找不到 Roblox，因此 Roblox 連結也會在瀏覽器中開啟。",
+        HeroNotInstalledPill = "未安裝",
+        HeroNotInstalledTitle = "先安裝吧",
+        HeroNotInstalledDesc = "安裝後，即可在 Windows「預設應用程式」中選擇 LazyBlox。不會變更你的預設瀏覽器。",
+        HeroBrokenPill = "需要修復",
+        HeroBrokenTitle = "註冊有問題",
+        HeroOneStepPill = "還差一步",
+        HeroOneStepTitle = "請切換預設應用程式",
+        HeroOneStepDesc = "在設定中為「HTTPS」與「HTTP」選擇 LazyBlox，就能接收來自 Discord 等應用程式的連結。",
+        HeroReadyPill = "已就緒",
+        HeroReadyTitle = "Roblox 連結將直接啟動",
+        HeroReadyDesc = "在 Discord 等處開啟私人伺服器連結時，Roblox 會直接啟動，不經過瀏覽器。其他連結會在 {0} 中開啟。",
+        HeroReadyHttpHint = "將 HTTP 也設為 LazyBlox，就能處理 http:// 連結。",
+
+        BrowserTitle = "目標瀏覽器",
+        BrowserIntro = "非 Roblox 私人伺服器的連結會在這裡選擇的瀏覽器中開啟。LazyBlox 本身以及會透過關聯繞回的啟動方式不會列出。",
+        BrowserNone = "找不到已註冊的瀏覽器。可以使用 CLI 命令 set-browser 指定 exe 路徑。",
+
+        TestTitle = "連結判定測試",
+        TestIntro = "複製一個 URL，然後按「貼上」，即可查看該連結會如何處理。不會實際啟動任何程式。",
+        TestPaste = "貼上並判定",
+        TestSample = "範例",
+        TestInput = "輸入",
+        TestToRoblox = "直接在 Roblox 中開啟",
+        TestToBrowser = "在瀏覽器中開啟",
+        TestRejected = "不開啟（已拒絕）",
+        TestReason = "原因",
+        TestDeepLink = "轉換後的深層連結",
+        TestForwardUrl = "要轉送的 URL",
+        TestPlanned = "預定動作",
+        TestActRoblox = "交給 Roblox：{0}",
+        TestActBrowser = "啟動瀏覽器：{0}",
+        TestActError = "顯示錯誤：{0}",
+        TestClipboardEmpty = "剪貼簿中沒有文字。",
+    };
+}

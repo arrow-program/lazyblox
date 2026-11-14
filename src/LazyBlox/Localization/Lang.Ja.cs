@@ -1,0 +1,205 @@
+namespace LazyBlox.Localization;
+
+internal static partial class Lang
+{
+    private static Strings? _ja;
+    public static Strings Ja => _ja ??= new Strings
+    {
+        AppTagline = "Roblox のプライベートサーバーへ、ブラウザを経由せず直接参加",
+        AppDescription = "Roblox のプライベートサーバーリンクをブラウザを経由せずに Roblox で直接開き、それ以外のリンクは通常のブラウザへ転送します。",
+        Cancel = "キャンセル",
+        Close = "閉じる",
+        Back = "戻る",
+        Save = "保存",
+        Copy = "コピー",
+        Later = "あとで",
+        ErrorPrefix = "エラー: {0}",
+        On = "オン",
+        Off = "オフ",
+        NotSet = "未設定",
+        GenericBrowser = "ブラウザ",
+
+        UrlEmpty = "URL が空です",
+        UrlTooLong = "URL が長すぎます",
+        UrlControlChars = "URL に制御文字が含まれています",
+        UrlMalformed = "URL の形式が不正です",
+        UrlUnsupportedScheme = "対応していないスキームです: {0}",
+        UrlNoHost = "ホスト名がありません",
+
+        CmdEmpty = "ブラウザのコマンドが空です",
+        CmdNotAbsolute = "ブラウザの実行ファイルは絶対パスで指定してください: {0}",
+        CmdIsSelf = "転送先ブラウザがこのランチャー自身になっています（無限ループ防止のため中止）",
+        CmdShellDispatcher = "{0} は関連付け経由でランチャーに戻るため転送先に使えません（無限ループ防止）",
+
+        ErrWindowTitle = "リンクを開けませんでした",
+        ErrCannotOpen = "このリンクは開けません: {0}",
+        ErrLoop = "転送ループを検出したため中止しました。設定で転送先ブラウザを確認してください。",
+        ErrNoBrowser = "転送先ブラウザが設定されていません。",
+        ErrBrowserFailed = "ブラウザを起動できませんでした。",
+        ErrBrowserHint = "設定（LazyBlox.exe を引数なしで起動）で転送先ブラウザを選び直してください。",
+        LaunchShellExecuteFailed = "ShellExecuteEx 失敗 (Win32 エラー {0})",
+        LaunchExeNotFound = "実行ファイルが見つかりません: {0}",
+        LaunchCreateProcessFailed = "CreateProcess 失敗 (Win32 エラー {0}): {1}",
+
+        RegDefaultValue = "(既定)",
+        RegDeleteKey = "（キーごと削除）",
+        RegDeleteValue = "値 {0} を削除",
+        RegMismatch = "不一致: {0}",
+        RegExeMissing = "実行ファイルがありません: {0}",
+        RegLeftKey = "残存キー: {0}",
+        RegLeftValue = "残存値: {0}",
+
+        PlanInstallHeader = "■ インストール時の変更内容（すべて現在のユーザー HKCU のみ・管理者権限不要）",
+        PlanCopy = "ファイル: {0} → {1} にコピー",
+        PlanRegistry = "レジストリ:",
+        PlanConfig = "設定ファイル: {0}",
+        PlanBrowser = "  転送先ブラウザ: {0} ({1})",
+        PlanCommand = "  コマンド: {0}",
+        PlanUnchanged = "変更しないもの: 既定のブラウザ (UserChoice)、他アプリのレジストリ、HKLM。",
+        PlanSwitchYourself = "既定アプリの切り替えは、インストール後に Windows の設定画面でご自身で行います。",
+        PlanUninstallHeader = "■ アンインストール時の変更内容",
+        PlanUninstallRegistry = "レジストリ（このアプリが作成したものだけ）:",
+        PlanDeleteConfigDir = "削除するフォルダ: {0}（設定）",
+        PlanDeleteInstallDir = "削除するフォルダ: {0}（インストール先・存在する場合）",
+        PlanUninstallUnchanged = "変更しないもの: 他のブラウザの登録・設定。既定アプリは Windows 側で選び直してください。",
+
+        LogNoBrowser = "エラー: 転送先ブラウザを検出できませんでした。--browser で指定してください。",
+        LogBrowser = "転送先ブラウザ: {0} ({1})",
+        LogVerifyProblems = "検証で問題が見つかりました:",
+        LogVerifyOk = "登録を検証しました: OK",
+        LogNextStep = "次の手順: 設定 > アプリ > 既定のアプリ > LazyBlox で「HTTPS」と「HTTP」を LazyBlox に変更してください。",
+        LogRemovedClean = "レジストリの削除を確認しました: 残存なし",
+        LogRemovedPartial = "一部のレジストリが残っています",
+        LogStillDefault = "注意: 現在 HTTPS の既定が LazyBlox のままです。設定 > アプリ > 既定のアプリ で元のブラウザ（{0}）を既定に戻してください。",
+        LogBadCommand = "登録コマンドが不正です",
+        LogCopied = "コピーしました: {0}",
+        LogDeleted = "削除しました: {0}",
+        LogDeleteFailed = "削除できませんでした: {0} ({1})",
+        LogCannotAutoDelete = "自動削除できないパスです。手動で削除してください: {0}",
+        LogDeleteAfterExit = "終了後に削除します: {0}",
+        LogDeleteManually = "手動で削除してください: {0}",
+        NoteSpecifiedNotFound = "指定 '{0}' が見つかりません",
+        NoteSpecified = "指定",
+        NoteKeepExisting = "既存の設定を維持",
+        NoteNotDetected = "検出できません",
+        NoteDetected = "現在の既定ブラウザから検出",
+
+        StRegistered = "登録: {0}",
+        StYes = "あり",
+        StNo = "なし",
+        StVerify = "登録の検証: {0}",
+        StExe = "登録先 exe: {0}",
+        StHttps = "既定 HTTPS: {0}",
+        StHttp = "既定 HTTP : {0}",
+        StInUse = "  ← LazyBlox 使用中",
+        StBrowser = "転送先ブラウザ: {0}",
+        StCommand = "  コマンド: {0}",
+        StRoblox = "Roblox (roblox: プロトコル): {0}",
+        StRobloxFound = "登録あり",
+        StRobloxMissing = "見つかりません",
+
+        CliNotInstalledClean = "未インストール（残存レジストリなし）",
+        CliInstalledOk = "インストール済み・登録 OK ({0})",
+        CliSetBrowserUsage = "使い方: set-browser <ProgID | ブラウザ名 | exe の絶対パス>",
+        CliBrowserNotFound = "見つかりません。'browsers' で一覧を確認してください。",
+        CliBrowserSet = "転送先ブラウザ: {0}\n  {1}",
+        CliTiming = "タイミング記録: {0}  ({1})",
+        CliLegacy = "旧形式プライベートサーバーリンクの変換: {0}",
+        CliUnknownCommand = "不明なコマンド: {0}",
+        CliNeedYes = "上記の変更を行うには --yes を付けて再実行してください（何も変更していません）。",
+        CliDryRunUsage = "使い方: dry-run <URL>",
+        Help = """
+            LazyBlox - Roblox プライベートサーバーリンク高速ランチャー
+
+            使い方:
+              LazyBlox.exe                      設定画面 (GUI)
+              LazyBlox.exe <URL>                リンクを処理（Windows から呼ばれる形式）
+              LazyBlox.exe status               登録状態・既定アプリ・転送先を表示
+              LazyBlox.exe plan [uninstall]     レジストリ変更内容のプレビュー（何も変更しません）
+              LazyBlox.exe install [--yes] [--in-place] [--browser <名前|ProgID|exeパス>] [--no-settings]
+              LazyBlox.exe uninstall [--yes] [--keep-config]
+              LazyBlox.exe verify               登録内容／残存設定の検証
+              LazyBlox.exe browsers             検出したブラウザの一覧（* = 現在の転送先）
+              LazyBlox.exe set-browser <名前|ProgID|exeパス>
+              LazyBlox.exe default-apps         Windows の既定のアプリ設定を開く
+              LazyBlox.exe dry-run <URL>        判定と実行予定を表示（起動しません）
+              LazyBlox.exe bench [URL] [回数]   URL 判定処理のマイクロベンチマーク
+              LazyBlox.exe timing on|off        実処理時間を timing.log に記録
+              LazyBlox.exe legacy on|off        旧形式 /games/ID?privateServerLinkCode= の変換（実験的）
+
+            install / uninstall は --yes が無い場合、変更内容を表示するだけで何もしません。
+            """,
+
+        ConfirmInstallTitle = "インストールしますか？",
+        ConfirmRepairTitle = "登録を修復しますか？",
+        ConfirmInstallBody = "以下の変更を、現在のユーザーにだけ行います。既定のブラウザや他のアプリの設定は変更しません。",
+        ConfirmUninstallTitle = "アンインストールしますか？",
+        ConfirmUninstallBody = "このアプリが作成したレジストリと設定だけを削除します。既定のブラウザが LazyBlox のままの場合は、あとで Windows の設定から元のブラウザを選び直してください。",
+        ConfirmGenericBody = "以下の変更を行います。",
+        BtnInstall = "インストール",
+        BtnRepair = "修復する",
+        BtnUninstall = "アンインストール",
+        BtnOpenDefaultApps = "既定のアプリを開く",
+        InstalledTitle = "インストールしました",
+        InstalledBody = "最後に、Windows の設定で「HTTPS」と「HTTP」の既定アプリに LazyBlox を選んでください。",
+        InstallFailedTitle = "インストールできませんでした",
+        InstallFailedBody = "詳細を確認してください。",
+        UninstalledTitle = "アンインストールしました",
+        UninstallPartialTitle = "一部を削除できませんでした",
+        UninstalledStillDefault = "HTTPS の既定がまだ LazyBlox になっています。Windows の設定で元のブラウザを選び直してください。",
+        UninstalledThanks = "ご利用ありがとうございました。",
+        AfterUninstallHint = "既定のブラウザが LazyBlox のままの場合は、Windows の設定 > アプリ > 既定のアプリ で元のブラウザを選び直してください。",
+
+        SectionActions = "操作",
+        TileHttps = "HTTPS の既定",
+        TileBrowser = "転送先ブラウザ",
+        RobloxDetected = "検出済み",
+        RobloxMissing = "見つかりません",
+        RowDefaultApps = "既定のアプリ設定を開く",
+        RowDefaultAppsDesc = "HTTPS と HTTP で LazyBlox を選びます（ご自身で切り替え）",
+        RowInstall = "インストール",
+        RowRepair = "登録を修復 / 再インストール",
+        RowInstallDesc = "変更内容を確認してから実行します。管理者権限は不要です",
+        RowBrowser = "転送先ブラウザ",
+        RowBrowserDesc = "Roblox 以外のリンクを開くブラウザ: {0}",
+        RowLegacy = "旧形式リンクも Roblox で開く",
+        RowLegacyDesc = "/games/…?privateServerLinkCode= 形式に対応（実験的）",
+        RowTest = "リンクの判定テスト",
+        RowTestDesc = "どのリンクが Roblox で開くかを確認します（起動はしません）",
+        RowUninstallDesc = "このアプリが作成したレジストリと設定だけを削除します",
+        HeroRobloxMissing = "Roblox が見つからないため、Roblox のリンクもブラウザで開きます。",
+        HeroNotInstalledPill = "未インストール",
+        HeroNotInstalledTitle = "まずはインストール",
+        HeroNotInstalledDesc = "インストールすると、Windows の「既定のアプリ」で LazyBlox を選べるようになります。既定のブラウザは変更しません。",
+        HeroBrokenPill = "要修復",
+        HeroBrokenTitle = "登録に問題があります",
+        HeroOneStepPill = "あと 1 ステップ",
+        HeroOneStepTitle = "既定のアプリを切り替えてください",
+        HeroOneStepDesc = "設定で「HTTPS」と「HTTP」に LazyBlox を選ぶと、Discord などのリンクを受け取れるようになります。",
+        HeroReadyPill = "準備完了",
+        HeroReadyTitle = "Roblox リンクは直接起動します",
+        HeroReadyDesc = "Discord などでプライベートサーバーのリンクを開くと、ブラウザを経由せずに Roblox が起動します。それ以外のリンクは {0} で開きます。",
+        HeroReadyHttpHint = "HTTP も LazyBlox にしておくと、http:// のリンクにも対応します。",
+
+        BrowserTitle = "転送先ブラウザ",
+        BrowserIntro = "Roblox 以外のリンクは、ここで選んだブラウザで開きます。LazyBlox 自身や、関連付けを経由して戻ってくる起動方法は一覧に出ません。",
+        BrowserNone = "登録済みのブラウザが見つかりませんでした。CLI の set-browser で exe のパスを指定できます。",
+
+        TestTitle = "リンクの判定テスト",
+        TestIntro = "URL をコピーしてから「貼り付け」を押すと、そのリンクがどう処理されるかを表示します。実際には何も起動しません。",
+        TestPaste = "貼り付けて判定",
+        TestSample = "サンプル",
+        TestInput = "入力",
+        TestToRoblox = "Roblox で直接開く",
+        TestToBrowser = "ブラウザで開く",
+        TestRejected = "開かない（拒否）",
+        TestReason = "理由",
+        TestDeepLink = "変換後のディープリンク",
+        TestForwardUrl = "転送する URL",
+        TestPlanned = "実行予定",
+        TestActRoblox = "Roblox に渡す: {0}",
+        TestActBrowser = "ブラウザを起動: {0}",
+        TestActError = "エラー表示: {0}",
+        TestClipboardEmpty = "クリップボードにテキストがありません。",
+    };
+}

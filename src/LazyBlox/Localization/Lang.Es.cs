@@ -1,0 +1,205 @@
+namespace LazyBlox.Localization;
+
+internal static partial class Lang
+{
+    private static Strings? _es;
+    public static Strings Es => _es ??= new Strings
+    {
+        AppTagline = "Únete a servidores privados de Roblox directamente, sin pasar por el navegador",
+        AppDescription = "Abre los enlaces de servidores privados de Roblox directamente en Roblox sin navegador y envía el resto de enlaces a tu navegador habitual.",
+        Cancel = "Cancelar",
+        Close = "Cerrar",
+        Back = "Atrás",
+        Save = "Guardar",
+        Copy = "Copiar",
+        Later = "Más tarde",
+        ErrorPrefix = "Error: {0}",
+        On = "activado",
+        Off = "desactivado",
+        NotSet = "Sin configurar",
+        GenericBrowser = "tu navegador",
+
+        UrlEmpty = "La URL está vacía",
+        UrlTooLong = "La URL es demasiado larga",
+        UrlControlChars = "La URL contiene caracteres de control",
+        UrlMalformed = "La URL no es válida",
+        UrlUnsupportedScheme = "Esquema no compatible: {0}",
+        UrlNoHost = "La URL no tiene nombre de host",
+
+        CmdEmpty = "El comando del navegador está vacío",
+        CmdNotAbsolute = "El ejecutable del navegador debe ser una ruta absoluta: {0}",
+        CmdIsSelf = "El navegador de destino es este mismo lanzador (detenido para evitar un bucle infinito)",
+        CmdShellDispatcher = "{0} no se puede usar como navegador porque devolvería el enlace a este lanzador (prevención de bucle infinito)",
+
+        ErrWindowTitle = "No se pudo abrir el enlace",
+        ErrCannotOpen = "Este enlace no se puede abrir: {0}",
+        ErrLoop = "Se detuvo porque se detectó un bucle de reenvío. Revisa el navegador en la configuración.",
+        ErrNoBrowser = "No hay ningún navegador configurado.",
+        ErrBrowserFailed = "No se pudo iniciar el navegador.",
+        ErrBrowserHint = "Vuelve a elegir el navegador en la configuración (ejecuta LazyBlox.exe sin argumentos).",
+        LaunchShellExecuteFailed = "ShellExecuteEx falló (error de Win32 {0})",
+        LaunchExeNotFound = "No se encontró el ejecutable: {0}",
+        LaunchCreateProcessFailed = "CreateProcess falló (error de Win32 {0}): {1}",
+
+        RegDefaultValue = "(Predeterminado)",
+        RegDeleteKey = "(eliminar la clave completa)",
+        RegDeleteValue = "eliminar el valor {0}",
+        RegMismatch = "No coincide: {0}",
+        RegExeMissing = "Falta el ejecutable: {0}",
+        RegLeftKey = "Clave restante: {0}",
+        RegLeftValue = "Valor restante: {0}",
+
+        PlanInstallHeader = "■ Cambios al instalar (solo el usuario actual, HKCU; no requiere permisos de administrador)",
+        PlanCopy = "Archivo: copiar {0} → {1}",
+        PlanRegistry = "Registro:",
+        PlanConfig = "Archivo de configuración: {0}",
+        PlanBrowser = "  Navegador: {0} ({1})",
+        PlanCommand = "  Comando: {0}",
+        PlanUnchanged = "No se cambia: tu navegador predeterminado (UserChoice), el registro de otras aplicaciones ni HKLM.",
+        PlanSwitchYourself = "Después de instalar, cambia tú mismo la aplicación predeterminada en Configuración de Windows.",
+        PlanUninstallHeader = "■ Cambios al desinstalar",
+        PlanUninstallRegistry = "Registro (solo lo que creó esta aplicación):",
+        PlanDeleteConfigDir = "Carpeta que se eliminará: {0} (configuración)",
+        PlanDeleteInstallDir = "Carpeta que se eliminará: {0} (ubicación de instalación, si existe)",
+        PlanUninstallUnchanged = "No se cambia: el registro ni la configuración de otros navegadores. Vuelve a elegir tu navegador predeterminado en Windows.",
+
+        LogNoBrowser = "Error: no se pudo detectar ningún navegador. Indícalo con --browser.",
+        LogBrowser = "Navegador: {0} ({1})",
+        LogVerifyProblems = "La verificación encontró problemas:",
+        LogVerifyOk = "Registro verificado: OK",
+        LogNextStep = "Siguiente paso: en Configuración > Aplicaciones > Aplicaciones predeterminadas > LazyBlox, cambia \"HTTPS\" y \"HTTP\" a LazyBlox.",
+        LogRemovedClean = "Eliminación del registro verificada: no queda nada",
+        LogRemovedPartial = "Quedan algunas entradas del registro",
+        LogStillDefault = "Nota: HTTPS todavía se abre con LazyBlox. En Configuración > Aplicaciones > Aplicaciones predeterminadas, vuelve a tu navegador original ({0}).",
+        LogBadCommand = "El comando registrado no es válido",
+        LogCopied = "Copiado: {0}",
+        LogDeleted = "Eliminado: {0}",
+        LogDeleteFailed = "No se pudo eliminar: {0} ({1})",
+        LogCannotAutoDelete = "Esta ruta no se puede eliminar automáticamente. Elimínala manualmente: {0}",
+        LogDeleteAfterExit = "Se eliminará al salir: {0}",
+        LogDeleteManually = "Elimínalo manualmente: {0}",
+        NoteSpecifiedNotFound = "No se encontró '{0}'",
+        NoteSpecified = "especificado",
+        NoteKeepExisting = "se mantiene la configuración actual",
+        NoteNotDetected = "no detectado",
+        NoteDetected = "detectado a partir del navegador predeterminado actual",
+
+        StRegistered = "Registrado: {0}",
+        StYes = "sí",
+        StNo = "no",
+        StVerify = "Verificación: {0}",
+        StExe = "Exe registrado: {0}",
+        StHttps = "HTTPS predeterminado: {0}",
+        StHttp = "HTTP predeterminado:  {0}",
+        StInUse = "  ← LazyBlox en uso",
+        StBrowser = "Navegador: {0}",
+        StCommand = "  Comando: {0}",
+        StRoblox = "Roblox (protocolo roblox:): {0}",
+        StRobloxFound = "registrado",
+        StRobloxMissing = "no encontrado",
+
+        CliNotInstalledClean = "No instalado (no quedan entradas en el registro)",
+        CliInstalledOk = "Instalado, registro correcto ({0})",
+        CliSetBrowserUsage = "Uso: set-browser <ProgID | nombre del navegador | ruta absoluta del exe>",
+        CliBrowserNotFound = "No encontrado. Ejecuta 'browsers' para ver la lista.",
+        CliBrowserSet = "Navegador: {0}\n  {1}",
+        CliTiming = "Registro de tiempos: {0}  ({1})",
+        CliLegacy = "Conversión de enlaces antiguos de servidores privados: {0}",
+        CliUnknownCommand = "Comando desconocido: {0}",
+        CliNeedYes = "Vuelve a ejecutar con --yes para aplicar los cambios anteriores (no se ha cambiado nada).",
+        CliDryRunUsage = "Uso: dry-run <URL>",
+        Help = """
+            LazyBlox - lanzador rápido para enlaces de servidores privados de Roblox
+
+            Uso:
+              LazyBlox.exe                      Configuración (GUI)
+              LazyBlox.exe <URL>                Procesa un enlace (así lo llama Windows)
+              LazyBlox.exe status               Muestra el registro, las aplicaciones predeterminadas y el navegador
+              LazyBlox.exe plan [uninstall]     Vista previa de los cambios en el registro (no cambia nada)
+              LazyBlox.exe install [--yes] [--in-place] [--browser <nombre|ProgID|ruta exe>] [--no-settings]
+              LazyBlox.exe uninstall [--yes] [--keep-config]
+              LazyBlox.exe verify               Verifica el registro / restos de configuración
+              LazyBlox.exe browsers             Lista los navegadores detectados (* = actual)
+              LazyBlox.exe set-browser <nombre|ProgID|ruta exe>
+              LazyBlox.exe default-apps         Abre la configuración de aplicaciones predeterminadas de Windows
+              LazyBlox.exe dry-run <URL>        Muestra la decisión y la acción prevista (no ejecuta nada)
+              LazyBlox.exe bench [URL] [veces]  Microbenchmark del análisis de URL
+              LazyBlox.exe timing on|off        Registra el tiempo de proceso en timing.log
+              LazyBlox.exe legacy on|off        Convierte enlaces antiguos /games/ID?privateServerLinkCode= (experimental)
+
+            Sin --yes, install / uninstall solo muestran los cambios y no hacen nada.
+            """,
+
+        ConfirmInstallTitle = "¿Instalar LazyBlox?",
+        ConfirmRepairTitle = "¿Reparar el registro?",
+        ConfirmInstallBody = "Los siguientes cambios se aplican solo al usuario actual. No se cambia tu navegador predeterminado ni la configuración de otras aplicaciones.",
+        ConfirmUninstallTitle = "¿Desinstalar LazyBlox?",
+        ConfirmUninstallBody = "Solo se eliminan las entradas del registro y la configuración que creó esta aplicación. Si LazyBlox sigue siendo la aplicación predeterminada para los enlaces, vuelve a elegir tu navegador original en Configuración de Windows.",
+        ConfirmGenericBody = "Se realizarán los siguientes cambios.",
+        BtnInstall = "Instalar",
+        BtnRepair = "Reparar",
+        BtnUninstall = "Desinstalar",
+        BtnOpenDefaultApps = "Abrir aplicaciones predeterminadas",
+        InstalledTitle = "Instalado",
+        InstalledBody = "Último paso: en Configuración de Windows, elige LazyBlox como aplicación predeterminada para \"HTTPS\" y \"HTTP\".",
+        InstallFailedTitle = "No se pudo instalar",
+        InstallFailedBody = "Consulta los detalles a continuación.",
+        UninstalledTitle = "Desinstalado",
+        UninstallPartialTitle = "No se pudieron eliminar algunos elementos",
+        UninstalledStillDefault = "HTTPS todavía se abre con LazyBlox. Vuelve a elegir tu navegador original en Configuración de Windows.",
+        UninstalledThanks = "Gracias por usar LazyBlox.",
+        AfterUninstallHint = "Si LazyBlox sigue siendo tu navegador predeterminado, vuelve a elegir tu navegador original en Configuración > Aplicaciones > Aplicaciones predeterminadas.",
+
+        SectionActions = "Acciones",
+        TileHttps = "HTTPS predeterminado",
+        TileBrowser = "Navegador",
+        RobloxDetected = "Detectado",
+        RobloxMissing = "No encontrado",
+        RowDefaultApps = "Abrir aplicaciones predeterminadas",
+        RowDefaultAppsDesc = "Elige LazyBlox para HTTPS y HTTP (el cambio lo haces tú)",
+        RowInstall = "Instalar",
+        RowRepair = "Reparar / reinstalar",
+        RowInstallDesc = "Revisa los cambios antes de aplicarlos. No requiere permisos de administrador",
+        RowBrowser = "Navegador",
+        RowBrowserDesc = "Navegador para enlaces que no son de Roblox: {0}",
+        RowLegacy = "Abrir también enlaces antiguos en Roblox",
+        RowLegacyDesc = "Admite enlaces /games/…?privateServerLinkCode= (experimental)",
+        RowTest = "Probador de enlaces",
+        RowTestDesc = "Comprueba qué enlaces se abren en Roblox (no ejecuta nada)",
+        RowUninstallDesc = "Elimina solo las entradas del registro y la configuración que creó esta aplicación",
+        HeroRobloxMissing = "No se encontró Roblox, así que los enlaces de Roblox también se abrirán en el navegador.",
+        HeroNotInstalledPill = "No instalado",
+        HeroNotInstalledTitle = "Instala para empezar",
+        HeroNotInstalledDesc = "Después de instalar, podrás elegir LazyBlox en \"Aplicaciones predeterminadas\" de Windows. Tu navegador predeterminado no cambia.",
+        HeroBrokenPill = "Requiere reparación",
+        HeroBrokenTitle = "Hay un problema con el registro",
+        HeroOneStepPill = "Un paso más",
+        HeroOneStepTitle = "Cambia la aplicación predeterminada",
+        HeroOneStepDesc = "Elige LazyBlox para \"HTTPS\" y \"HTTP\" en Configuración para que reciba los enlaces de Discord y otras aplicaciones.",
+        HeroReadyPill = "Listo",
+        HeroReadyTitle = "Los enlaces de Roblox se abren directamente",
+        HeroReadyDesc = "Abre un enlace de servidor privado en Discord o en cualquier otro sitio y Roblox se iniciará sin navegador. Los demás enlaces se abren en {0}.",
+        HeroReadyHttpHint = "Asigna también HTTP a LazyBlox para manejar enlaces http://.",
+
+        BrowserTitle = "Navegador",
+        BrowserIntro = "Los enlaces que no son de servidores privados de Roblox se abren en el navegador que elijas aquí. No se muestran LazyBlox ni los lanzadores que devolverían el enlace a través de la asociación.",
+        BrowserNone = "No se encontraron navegadores registrados. Puedes indicar la ruta de un exe con el comando set-browser de la CLI.",
+
+        TestTitle = "Probador de enlaces",
+        TestIntro = "Copia una URL y pulsa Pegar para ver cómo se procesaría ese enlace. No se ejecuta nada.",
+        TestPaste = "Pegar y probar",
+        TestSample = "Ejemplo",
+        TestInput = "Entrada",
+        TestToRoblox = "Se abre directamente en Roblox",
+        TestToBrowser = "Se abre en el navegador",
+        TestRejected = "No se abre (rechazado)",
+        TestReason = "Motivo",
+        TestDeepLink = "Enlace profundo convertido",
+        TestForwardUrl = "URL que se reenviará",
+        TestPlanned = "Acción prevista",
+        TestActRoblox = "Enviar a Roblox: {0}",
+        TestActBrowser = "Iniciar navegador: {0}",
+        TestActError = "Mostrar error: {0}",
+        TestClipboardEmpty = "No hay texto en el portapapeles.",
+    };
+}
