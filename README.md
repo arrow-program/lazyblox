@@ -1,7 +1,8 @@
 # LazyBlox — Roblox プライベートサーバー高速起動ランチャー
-
-Discord などで `https://www.roblox.com/share?code=XXXX&type=Server` をクリックしたとき、**Web ブラウザを起動せずに** Roblox アプリへ参加要求（ディープリンク）を直接渡す Windows 11 向けの軽量ランチャーです。  
-Roblox 以外の通常リンクは、普段使っているブラウザへそのまま転送します。
+↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+## Discord などで `https://www.roblox.com/share?code=XXXX&type=Server` をクリックしたとき、**Web ブラウザを起動せずに** Roblox アプリへ参加要求（ディープリンク）を直接渡す Windows 11 向けの軽量ランチャーです。  
+### Roblox 以外の通常リンクは、普段使っているブラウザへそのまま転送します。
+↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 ```text
 Discord などでリンクをクリック
