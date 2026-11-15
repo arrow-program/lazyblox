@@ -229,6 +229,7 @@ LazyBlox.exe set-browser "C:\Path\To\browser.exe"
 | 既定のアプリに LazyBlox が出てこない | `LazyBlox.exe verify` で登録状態を確認し、問題があれば再インストールしてください。その後、設定アプリを開き直して `LazyBlox` を検索してください。 |
 | リンクを開くたびにアプリ選択が出る | Windows 側で既定が確定していません。選択ダイアログで「常に使う」にチェックを入れて LazyBlox を選ぶか、設定画面で HTTPS と HTTP を LazyBlox に設定してください。 |
 | Roblox リンクがブラウザで開く | `LazyBlox.exe dry-run "<リンク>"` で判定結果を確認してください。`type=Server` 以外（例: `ExperienceInvite`）は仕様どおりブラウザで開きます。`roblox:` プロトコルが見つからない場合は Roblox を再インストールしてください。 |
+| リンクを押しても、起動中の Roblox が反応しない（ゲーム中も移動しない） | Roblox を一度完全に終了し、起動し直してから、もう一度リンクを開いてください。長時間（約 1 日）起動したままの Roblox が、リンクを受信しても何もしなくなった事例を確認しています（Roblox のログに `receiving deeplink` だけが出て、その後ゲームの起動が記録されない）。起動し直したあとは、ゲーム中でもリンクで移動できました。LazyBlox が呼ばれているかは `timing on` で確認できます（`%LOCALAPPDATA%\LazyBlox\timing.log` に記録が増えれば正常）。 |
 | Roblox は起動するがサーバーに入らない | Roblox クライアント側の仕様変更や一時的な不具合、またはリンク無効化の可能性があります。ブラウザ版のリンクから参加できるかご確認ください。 |
 | 通常リンクで「ブラウザを起動できませんでした」と出る | ブラウザの更新等で exe パスが変わった可能性があります。設定画面または `LazyBlox.exe browsers` → `set-browser <名前>` で選び直してください。 |
 | 「転送ループを検出」と表示される | 転送先が LazyBlox に戻る設定になっています。`set-browser` で実際のブラウザを指定してください。 |
