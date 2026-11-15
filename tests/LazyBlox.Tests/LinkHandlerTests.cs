@@ -178,6 +178,23 @@ public class BrowserLocatorTests
     }
 
     [Fact]
+    public void UserChoiceLatest_WinsOverStaleUserChoice()
+    {
+        // Seen on a real Windows 11 machine: UserChoice still says Chrome after switching to LazyBlox.
+        FakeRegistry reg = FakeRegistry.TypicalMachine();
+        reg.Set(RegHive.CurrentUser, @"Software\Microsoft\Windows\Shell\Associations\UrlAssociations\https\UserChoiceLatest\ProgId", "ProgId", AppInfo.ProgId);
+        Assert.Equal(AppInfo.ProgId, BrowserLocator.GetUserChoiceProgId(reg, "https"));
+        Assert.Equal("MSEdgeHTM", BrowserLocator.DetectDefault(reg, BrowserLocator.Enumerate(reg))!.ProgId);
+    }
+
+    [Fact]
+    public void UserChoice_UsedWhenNoLatestKey()
+    {
+        FakeRegistry reg = FakeRegistry.TypicalMachine();
+        Assert.Equal("ChromeHTML", BrowserLocator.GetUserChoiceProgId(reg, "https"));
+    }
+
+    [Fact]
     public void ProgIdCommand_HkcuOverridesHklm_AndRejectsPathTricks()
     {
         FakeRegistry reg = FakeRegistry.TypicalMachine();

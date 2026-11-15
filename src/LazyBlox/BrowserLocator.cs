@@ -13,9 +13,11 @@ public static class BrowserLocator
     public static string? GetUserChoiceProgId(IRegistryView reg, string scheme)
     {
         string key = string.Format(System.Globalization.CultureInfo.InvariantCulture, UserChoiceKeyFormat, scheme);
-        string? progId = reg.GetString(RegHive.CurrentUser, key, "ProgId");
-        // Windows 11 24H2+ also maintains a "UserChoiceLatest" key.
-        progId ??= reg.GetString(RegHive.CurrentUser, key.Replace("UserChoice", "UserChoiceLatest", StringComparison.Ordinal) , "ProgId");
+        // Newer Windows 11 builds store the effective choice in UserChoiceLatest\ProgId (value "ProgId") and
+        // can leave the classic UserChoice key stale, so the newer key wins when present.
+        string latest = key.Replace("UserChoice", "UserChoiceLatest", StringComparison.Ordinal);
+        string? progId = reg.GetString(RegHive.CurrentUser, latest + @"\ProgId", "ProgId");
+        if (string.IsNullOrWhiteSpace(progId)) progId = reg.GetString(RegHive.CurrentUser, key, "ProgId");
         return string.IsNullOrWhiteSpace(progId) ? null : progId;
     }
 
