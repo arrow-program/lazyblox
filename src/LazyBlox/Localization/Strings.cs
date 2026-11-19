@@ -157,6 +157,13 @@ internal sealed class Strings
     public required string RowBrowserDesc { get; init; }       // {0} = browser
     public required string RowLegacy { get; init; }
     public required string RowLegacyDesc { get; init; }
+    public required string RowRestartIfStuck { get; init; }
+    public required string RowRestartIfStuckDesc { get; init; }
+    public required string StuckTitle { get; init; }
+    public required string StuckBody { get; init; }
+    public required string BtnRestartRoblox { get; init; }
+    public required string ErrRestartFailed { get; init; }     // {0} = detail
+    public required string ErrRobloxStillRunning { get; init; } // {0} = process id
     public required string RowTest { get; init; }
     public required string RowTestDesc { get; init; }
     public required string RowUninstallDesc { get; init; }

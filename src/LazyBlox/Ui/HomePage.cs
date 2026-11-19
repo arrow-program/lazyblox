@@ -88,6 +88,8 @@ internal sealed class HomePage : Page
             () => Host.Navigate(new BrowserPage(this)));
         ui.Row("legacy", Glyph.History, L.S.RowLegacy,
             L.S.RowLegacyDesc, ToggleLegacy, RowTrail.Toggle, on: s.LegacyEnabled);
+        ui.Row("restart", Glyph.Game, L.S.RowRestartIfStuck,
+            L.S.RowRestartIfStuckDesc, ToggleRestartIfStuck, RowTrail.Toggle, on: s.RestartIfStuck);
         ui.Row("test", Glyph.Search, L.S.RowTest, L.S.RowTestDesc,
             () => Host.Navigate(new TestPage(this)));
         if (s.Registered)
@@ -135,6 +137,14 @@ internal sealed class HomePage : Page
     {
         AppConfig cfg = AppConfig.Load();
         cfg.LegacyPrivateServerLinks = !cfg.LegacyPrivateServerLinks;
+        cfg.Save();
+        Refresh();
+    }
+
+    private void ToggleRestartIfStuck()
+    {
+        AppConfig cfg = AppConfig.Load();
+        cfg.RestartIfStuck = !cfg.RestartIfStuck;
         cfg.Save();
         Refresh();
     }

@@ -22,6 +22,8 @@ public sealed class AppConfig
     public bool AutoDetectFallback { get; set; } = true;
     /// <summary>Also convert /games/ID?privateServerLinkCode=... links (opt-in).</summary>
     public bool LegacyPrivateServerLinks { get; set; }
+    /// <summary>If a running Roblox ignores a share link, ask whether to restart it into that server.</summary>
+    public bool RestartIfStuck { get; set; } = true;
 
     public static AppConfig Parse(string text)
     {
@@ -43,6 +45,7 @@ public sealed class AppConfig
                 case "originalhttpprogid": cfg.OriginalHttpProgId = value; break;
                 case "autodetectfallback": cfg.AutoDetectFallback = ParseBool(value, true); break;
                 case "legacyprivateserverlinks": cfg.LegacyPrivateServerLinks = ParseBool(value, false); break;
+                case "restartifstuck": cfg.RestartIfStuck = ParseBool(value, true); break;
             }
         }
         return cfg;
@@ -59,6 +62,7 @@ public sealed class AppConfig
         Append(sb, "OriginalHttpProgId", OriginalHttpProgId);
         Append(sb, "AutoDetectFallback", AutoDetectFallback ? "true" : "false");
         Append(sb, "LegacyPrivateServerLinks", LegacyPrivateServerLinks ? "true" : "false");
+        Append(sb, "RestartIfStuck", RestartIfStuck ? "true" : "false");
         return sb.ToString();
     }
 

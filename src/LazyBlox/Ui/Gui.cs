@@ -16,6 +16,8 @@ internal static class Gui
             "test" => new TestPage(new HomePage()),
             "message" => Demo(MessageKind.Success, L.S.InstalledTitle, L.S.InstalledBody),
             "error" => Demo(MessageKind.Error, L.S.ErrWindowTitle, L.S.ErrBrowserFailed + "\n" + L.S.ErrBrowserHint),
+            "stuck" => new DialogPage(MessageKind.Warning, L.S.StuckTitle, L.S.StuckBody, null,
+                [new(L.S.Cancel, ButtonKind.Secondary, w => w.Close()), new(L.S.BtnRestartRoblox, ButtonKind.Danger, w => w.Close())]),
             "confirm" => new DialogPage(MessageKind.Info, L.S.ConfirmInstallTitle,
                 L.S.ConfirmInstallBody,
                 new Installer(WindowsRegistry.Instance, _ => { }).DescribeInstall(new InstallOptions()),

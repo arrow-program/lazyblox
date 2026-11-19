@@ -6,7 +6,7 @@ public static class AppInfo
     public const string AppName = "LazyBlox";
     public const string ExeName = "LazyBlox.exe";
     public const string ProgId = "LazyBloxURL";
-    public const string Version = "1.0.1";
+    public const string Version = "1.1.0";
 
     /// <summary>Env override for the data directory (used by integration tests).</summary>
     public const string HomeEnvVar = "LAZYBLOX_HOME";

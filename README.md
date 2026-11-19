@@ -62,14 +62,29 @@ Discord などでリンクをクリック
   - **転送先ブラウザ**: Roblox 以外のリンクを開くブラウザの選択
   - **リンクの判定テスト**: クリップボード内の URL をテスト判定（実際には何も起動しません）
   - **エラー表示**: リンク処理に失敗した際の内容表示とコピー
+  - **再起動の確認**: 起動中の Roblox がリンクに反応しなかったときに出る確認（下記「Roblox が移動しないときの再起動」）
 - **キーボード操作**:
   - `Tab` / `↑` / `↓`: 項目の移動
   - `Enter` / `Space`: 決定
   - `Esc`: 戻る、または閉じる
   - `PageUp` / `PageDown`: スクロール
 - **スクリーンショットの撮影**:
-  - `scripts\capture-ui.ps1 -Page home|browser|test|confirm|message|error` で LazyBlox のウィンドウだけを撮影できます。
+  - `scripts\capture-ui.ps1 -Page home|browser|test|confirm|message|error|stuck` で LazyBlox のウィンドウだけを撮影できます。
   - 環境変数 `LAZYBLOX_UI_THEME=light|dark` で配色を固定できます。
+
+### Roblox が移動しないときの再起動
+
+長時間起動したままの Roblox は、リンクを受け取っても何もしないことがあります。LazyBlox はこれを Roblox のログで見分け、**確認してから** Roblox を再起動して同じサーバーに入り直せます。
+
+<img src="docs/screenshot-stuck.png" width="400" alt="再起動の確認">
+
+1. Roblox がすでに起動しているときだけ、リンクを渡したあとに Roblox のログ（`%LOCALAPPDATA%\Roblox\logs`）を最大 8 秒見ます。リンクを渡す処理そのものは待たせません。
+2. ログに移動の開始（`launchUGCGame` / `Joining game`）が出れば、何もせずに終わります。
+3. リンクを受け取った記録（`receiving deeplink` など）だけがあり移動が始まらないときは、確認画面を出します。
+4. 「Roblox を再起動」を押したときだけ、Roblox を終了（応答しなければ強制終了）してから同じリンクを開き直します。「キャンセル」なら何もしません。
+5. ログが見つからない、読めないなど判断できないときは、確認画面も出しません。
+
+この機能はホーム画面の「Roblox が移動しないときは再起動を提案」で切り替えられます（既定はオン、設定ファイルでは `RestartIfStuck`）。
 
 ---
 
@@ -229,7 +244,7 @@ LazyBlox.exe set-browser "C:\Path\To\browser.exe"
 | 既定のアプリに LazyBlox が出てこない | `LazyBlox.exe verify` で登録状態を確認し、問題があれば再インストールしてください。その後、設定アプリを開き直して `LazyBlox` を検索してください。 |
 | リンクを開くたびにアプリ選択が出る | Windows 側で既定が確定していません。選択ダイアログで「常に使う」にチェックを入れて LazyBlox を選ぶか、設定画面で HTTPS と HTTP を LazyBlox に設定してください。 |
 | Roblox リンクがブラウザで開く | `LazyBlox.exe dry-run "<リンク>"` で判定結果を確認してください。`type=Server` 以外（例: `ExperienceInvite`）は仕様どおりブラウザで開きます。`roblox:` プロトコルが見つからない場合は Roblox を再インストールしてください。 |
-| リンクを押しても、起動中の Roblox が反応しない（ゲーム中も移動しない） | Roblox を一度完全に終了し、起動し直してから、もう一度リンクを開いてください。長時間（約 1 日）起動したままの Roblox が、リンクを受信しても何もしなくなった事例を確認しています（Roblox のログに `receiving deeplink` だけが出て、その後ゲームの起動が記録されない）。起動し直したあとは、ゲーム中でもリンクで移動できました。LazyBlox が呼ばれているかは `timing on` で確認できます（`%LOCALAPPDATA%\LazyBlox\timing.log` に記録が増えれば正常）。 |
+| リンクを押しても、起動中の Roblox が反応しない（ゲーム中も移動しない） | Roblox を一度完全に終了し、起動し直してから、もう一度リンクを開いてください（「[Roblox が移動しないときの再起動](#roblox-が移動しないときの再起動)」がオンなら、これを検出したときに再起動するか確認画面が出ます）。長時間（約 1 日）起動したままの Roblox が、リンクを受信しても何もしなくなった事例を確認しています（Roblox のログに `receiving deeplink` だけが出て、その後ゲームの起動が記録されない）。起動し直したあとは、ゲーム中でもリンクで移動できました。LazyBlox が呼ばれているかは `timing on` で確認できます（`%LOCALAPPDATA%\LazyBlox\timing.log` に記録が増えれば正常）。 |
 | Roblox は起動するがサーバーに入らない | Roblox クライアント側の仕様変更や一時的な不具合、またはリンク無効化の可能性があります。ブラウザ版のリンクから参加できるかご確認ください。 |
 | 通常リンクで「ブラウザを起動できませんでした」と出る | ブラウザの更新等で exe パスが変わった可能性があります。設定画面または `LazyBlox.exe browsers` → `set-browser <名前>` で選び直してください。 |
 | 「転送ループを検出」と表示される | 転送先が LazyBlox に戻る設定になっています。`set-browser` で実際のブラウザを指定してください。 |

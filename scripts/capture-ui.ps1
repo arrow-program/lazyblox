@@ -7,7 +7,7 @@
 #>
 param(
     [string]$Exe = (Join-Path $PSScriptRoot '..\dist\LazyBlox.exe'),
-    [ValidateSet('home', 'browser', 'test', 'message', 'error', 'confirm')][string]$Page = 'home',
+    [ValidateSet('home', 'browser', 'test', 'message', 'error', 'confirm', 'stuck')][string]$Page = 'home',
     [string]$Out = "ui-$Page.png",
     [string[]]$ExeArgs = @()
 )

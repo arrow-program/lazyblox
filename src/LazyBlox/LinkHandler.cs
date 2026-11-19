@@ -32,6 +32,8 @@ public sealed class LinkHandler
 
     /// <summary>Set once the launch request has been handed to Windows; for timing.</summary>
     public RouteDecision LastDecision { get; private set; }
+    /// <summary>The deep link last handed to Roblox and when (UTC, taken just before the hand-off).</summary>
+    public (string DeepLink, DateTime LaunchedUtc)? LastRobloxLaunch { get; private set; }
     public bool ConfigWasLoaded => _config.IsValueCreated;
 
     public int Handle(string rawUrl)
@@ -44,8 +46,13 @@ public sealed class LinkHandler
             case RouteKind.Roblox:
                 if (_shell.IsProtocolRegistered("roblox"))
                 {
+                    DateTime launchedUtc = DateTime.UtcNow;
                     LaunchResult r = _shell.OpenUri(decision.Target);
-                    if (r.Success) return ExitCodes.Ok;
+                    if (r.Success)
+                    {
+                        LastRobloxLaunch = (decision.Target, launchedUtc);
+                        return ExitCodes.Ok;
+                    }
                 }
                 // Roblox missing or deep link failed: let the website handle it (it offers install / join).
                 return Forward(NormalizedOrRaw(rawUrl));

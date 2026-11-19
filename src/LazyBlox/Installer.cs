@@ -125,7 +125,7 @@ public sealed class Installer(WindowsRegistry registry, Action<string> log)
             BrowserLocator.GetUserChoiceProgId(registry, "http"),
             cfg.BrowserName, cfg.BrowserCommand,
             WindowsShell.Instance.IsProtocolRegistered("roblox"),
-            cfg.LegacyPrivateServerLinks);
+            cfg.LegacyPrivateServerLinks, cfg.RestartIfStuck);
     }
 
     public string Status()
@@ -258,7 +258,7 @@ public sealed record InstallStatus(
     bool Registered, IReadOnlyList<string> Problems, string? RegisteredExe,
     string? HttpsProgId, string? HttpProgId,
     string BrowserName, string BrowserCommand,
-    bool RobloxRegistered, bool LegacyEnabled)
+    bool RobloxRegistered, bool LegacyEnabled, bool RestartIfStuck)
 {
     public bool HttpsIsLazyBlox => HttpsProgId == AppInfo.ProgId;
     public bool HttpIsLazyBlox => HttpProgId == AppInfo.ProgId;

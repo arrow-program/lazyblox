@@ -44,7 +44,25 @@ internal static class Program
             if (code != ExitCodes.Ok) exit = code;
             if (i == 0) WriteTimingIfEnabled(handler.LastDecision);
         }
+        if (urls.Length == 1 && handler.LastRobloxLaunch is { } launch) OfferRestartIfStuck(launch.DeepLink, launch.LaunchedUtc);
         return exit;
+    }
+
+    /// <summary>
+    /// After the hand-off (so the launch itself is never delayed): if an already-running Roblox ignored the link,
+    /// ask the user whether to restart Roblox into that server. Best-effort; its own watching never shows errors.
+    /// </summary>
+    private static void OfferRestartIfStuck(string deepLink, DateTime launchedUtc)
+    {
+        if (AppInfo.Silent) return;
+        try
+        {
+            if (!AppConfig.Load().RestartIfStuck) return;
+            StuckFallback.Run(deepLink, launchedUtc, WindowsRobloxHost.Instance, WindowsShell.Instance,
+                () => Gui.Confirm(L.S.StuckTitle, L.S.StuckBody, null, L.S.BtnRestartRoblox, danger: true));
+        }
+        catch (Exception e) when (e is IOException or UnauthorizedAccessException or System.ComponentModel.Win32Exception
+                                       or InvalidOperationException) { }
     }
 
     /// <summary>Timing log is checked AFTER the launch request, so it never delays it.</summary>
